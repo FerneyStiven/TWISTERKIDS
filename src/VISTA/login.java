@@ -4,18 +4,34 @@
  */
 package VISTA;
 
+import MODELO.Login;
+import MODELO.LoginDAO;
+
 /**
  *
  * @author ferne
  */
 public class login extends javax.swing.JFrame {
-
-    /**
-     * Creates new form login
-     */
+    Login lg = new Login();
+    LoginDAO login = new LoginDAO();
+ 
     public login() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    public void validar(){
+         String usuario = txtusuario.getText();
+         String contraseña = String.valueOf( txtpass.getPassword());
+           if(!"".equals(usuario)|| !"".equals(contraseña)){
+               lg= login.log(usuario,contraseña);
+               if (lg.getUsuario()!= null && lg.getContraseña()!=null) {
+                  Sistema sis = new Sistema();
+                  sis.setVisible(true);
+                  dispose();
+               }
+              
+               
+           }
     }
 
     /**
@@ -138,7 +154,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtusuarioActionPerformed
 
     private void btnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptarActionPerformed
-        // TODO add your handling code here:
+        validar();
     }//GEN-LAST:event_btnaceptarActionPerformed
 
     /**

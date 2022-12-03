@@ -4,16 +4,24 @@
  */
 package MODELO;
 
-//import com.sun.jdi.connect.spi.Connection;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 /**
  *
  * @author USER
  */
 public class Conexion {
-    /*Connection con;
+    Connection con;
     public Connection getConnection(){
-
-    }*/
+        try {
+            String myBD = "jdbc:mysql://127.0.0.1:3306/twisterkids?serverTimezone=UTC";
+            con = DriverManager.getConnection(myBD,"root","1234");
+            return con;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return null;
+    }
     
 }
