@@ -4,14 +4,16 @@
  */
 package MODELO;
 
-import com.sun.jdi.connect.spi.Connection;
+//import com.sun.jdi.connect.spi.Connection;
 
 /**
  *
  * @author USER
  */
 public class Conexion {
-    Connection con;
+    /*Connection con;
     public Connection getConnection(){
 
+    }*/
+    
 }
