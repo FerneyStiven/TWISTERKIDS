@@ -4,15 +4,18 @@
  */
 package VISTA;
 
+import MODELO.Cliente;
+import MODELO.ClienteDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ferne
  */
 public class Sistema extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Sistema
-     */
+    Cliente cl = new Cliente();
+    ClienteDAO clinet = new ClienteDAO();
     public Sistema() {
         initComponents();
     }
@@ -393,6 +396,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnGuardarCliente.setText("GUARDAR");
         btnGuardarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarClienteActionPerformed(evt);
+            }
+        });
 
         btnEditarCliente.setText("EDITAR");
         btnEditarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -879,6 +887,19 @@ public class Sistema extends javax.swing.JFrame {
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
+        if (!"".equals(txtIdentificacionCliente.getText())|| !"".equals(txtNombreCliente.getText()) || !"".equals(txtCorreoCliente.getText())|| !"".equals(txtTelefonoCliente.getText())) {
+            cl.setDocumento(Integer.parseInt(txtIdentificacionCliente.getText()));
+            cl.setNombre(txtNombreCliente.getText());
+            cl.setCorreo(txtCorreoCliente.getText());
+             cl.setTelefono(Integer.parseInt(txtTelefonoCliente.getText()));
+            clinet.RegistrarCliente(cl);
+            JOptionPane.showMessageDialog(null, "Cliente Registrado");
+        } else{
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
     /**
      * @param args the command line arguments
