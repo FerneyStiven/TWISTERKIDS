@@ -15,9 +15,12 @@ public class login extends javax.swing.JFrame {
     Login lg = new Login();
     LoginDAO login = new LoginDAO();
  
+ 
     public login() {
         initComponents();
         this.setLocationRelativeTo(null);
+   
+        
     }
     public void validar(){
          String usuario = txtusuario.getText();

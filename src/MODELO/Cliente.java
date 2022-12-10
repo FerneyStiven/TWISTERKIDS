@@ -9,26 +9,36 @@ package MODELO;
  * @author ferne
  */
 public class Cliente {
-    private int documento;
+    private int id;
+    private String documento;
     private String nombre;
     private String correo;
-    private int telefono;
+    private String telefono;
 
     public Cliente() {
     }
 
-    public Cliente(int documento, String nombre, String correo, int telefono) {
+    public Cliente(int id, String documento, String nombre, String correo, String telefono) {
+        this.id = id;
         this.documento = documento;
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
     }
 
-    public int getDocumento() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDocumento() {
         return documento;
     }
 
-    public void setDocumento(int documento) {
+    public void setDocumento(String documento) {
         this.documento = documento;
     }
 
@@ -48,14 +58,13 @@ public class Cliente {
         this.correo = correo;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
-    
+
     
 }
