@@ -91,10 +91,8 @@ public class ClienteDAO {
 
     public boolean ModificarCliente(Cliente cl) {
         String sql = "Update cliente SET documento=?,nombre =?, correo=? , telefono=? WHERE  id=?;";
-        String sql2 = "alter table cliente auto_increment=1";
         try {
             ps = con.prepareStatement(sql);
-            ps = con.prepareStatement(sql2);
             ps.setString(1, cl.getDocumento());
             ps.setString(2, cl.getNombre());
             ps.setString(3, cl.getCorreo());
