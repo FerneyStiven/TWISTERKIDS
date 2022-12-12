@@ -6,6 +6,8 @@ package VISTA;
 
 import MODELO.Cliente;
 import MODELO.ClienteDAO;
+import MODELO.Provedor;
+import MODELO.ProvedorDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +21,8 @@ public class Sistema extends javax.swing.JFrame {
     Cliente cl = new Cliente();
     ClienteDAO client = new ClienteDAO();
     DefaultTableModel modelo = new DefaultTableModel();
+    Provedor pr = new Provedor();
+    ProvedorDAO prDao = new ProvedorDAO();
 
     public Sistema() {
         initComponents();
@@ -547,8 +551,19 @@ public class Sistema extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("correo");
 
+        txtDocumentoProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDocumentoProveedorActionPerformed(evt);
+            }
+        });
+
         btnGuardarProveedor.setText("GUARDAR");
         btnGuardarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarProveedorActionPerformed(evt);
+            }
+        });
 
         btnEditarProveedor.setText("EDITAR");
         btnEditarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1014,6 +1029,22 @@ public class Sistema extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
+
+    private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
+        if (!"".equals(txtDocumentoProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtCorreoProveedor.getText())) {
+            pr.setDocumento(txtDocumentoProveedor.getText());
+            pr.setNombre(txtNombreProveedor.getText());
+            pr.setTelefono(txtTelefonoProveedor.getText());
+            pr.setCorreo(txtCorreoProveedor.getText());
+            prDao.RegistrarProvedor(pr);
+        }else{
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarProveedorActionPerformed
+
+    private void txtDocumentoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocumentoProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDocumentoProveedorActionPerformed
 
     /**
      * @param args the command line arguments
