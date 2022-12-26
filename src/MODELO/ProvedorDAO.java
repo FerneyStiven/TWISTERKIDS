@@ -29,8 +29,8 @@ public class ProvedorDAO {
         } catch (SQLException e) {
             System.out.println(e.toString());
             return false;
-                    
-        }finally{
+
+        } finally {
             try {
                 con.close();
             } catch (SQLException e) {
@@ -39,28 +39,51 @@ public class ProvedorDAO {
         }
 
     }
-    
-    public List ListarProvedor(){
+
+    public List ListarProvedor() {
         List<Provedor> Listapr = new ArrayList();
         String sql = "select * from provedor";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            rs= ps.executeQuery();
-            while (rs.next()) {                
+            rs = ps.executeQuery();
+            while (rs.next()) {
                 Provedor pr = new Provedor();
                 pr.setId(rs.getInt("id"));
                 pr.setDocumento(rs.getString("documento"));
                 pr.setNombre(rs.getString("nombre"));
                 pr.setTelefono(rs.getString("telefono"));
                 pr.setCorreo(rs.getString("correo"));
-               Listapr.add(pr);
-                
+                Listapr.add(pr);
+
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
         return Listapr;
     }
-            
+
+    public boolean EliminarProvedor(int id) {
+        String sql = "Delete from provedor where id = ?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        } finally {
+            try {
+                con.close();
+
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
+        }
+
+    }
+
 }
