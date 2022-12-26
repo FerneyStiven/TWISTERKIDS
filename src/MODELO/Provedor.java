@@ -18,6 +18,15 @@ public class Provedor {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
+  
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDocumento() {
@@ -26,16 +35,6 @@ public class Provedor {
 
     public void setDocumento(String documento) {
         this.documento = documento;
-    }
-
-   
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -61,6 +60,9 @@ public class Provedor {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+
+    
     
     
 }
