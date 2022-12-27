@@ -94,6 +94,27 @@ public class Sistema extends javax.swing.JFrame {
 
     }
 
+    public void ListarBusqueda() {
+         List<Producto> ListarPro = proDao.BuscarProducto();
+        modelo = (DefaultTableModel) TableProducto.getModel();
+        LimpirarTable();
+        Object[] ob = new Object[8];
+        for (int i = 0; i < ListarPro.size(); i++) {
+            ob[0] = ListarPro.get(i).getId();
+            ob[1] = ListarPro.get(i).getCodigo();
+            ob[2] = ListarPro.get(i).getMarca();
+            ob[3] = ListarPro.get(i).getTalla();
+            ob[4] = ListarPro.get(i).getDescripcion();
+            ob[5] = ListarPro.get(i).getCantidad();
+            ob[6] = ListarPro.get(i).getPrecio();
+            ob[7] = ListarPro.get(i).getProvedor();
+            modelo.addRow(ob);
+
+        }
+        TableProducto.setModel(modelo);
+
+    }
+
     public void LimpirarTable() {
         for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
@@ -801,6 +822,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnNuevoProd.setText("buscar");
+        btnNuevoProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoProdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1312,6 +1338,14 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEditarProdActionPerformed
+
+    private void btnNuevoProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProdActionPerformed
+
+        
+        ListarBusqueda();
+
+
+    }//GEN-LAST:event_btnNuevoProdActionPerformed
 
     /**
      * @param args the command line arguments

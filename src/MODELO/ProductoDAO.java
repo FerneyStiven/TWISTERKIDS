@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 public class ProductoDAO {
 
@@ -49,6 +50,34 @@ public class ProductoDAO {
             System.out.println(e.toString());
         }
 
+    }
+
+    public List BuscarProducto() {
+        String valor = JOptionPane.showInputDialog(null, "Digite una Marca", "BUSCAR CALZADO", JOptionPane.PLAIN_MESSAGE);
+       
+         List<Producto> Listapro = new ArrayList();
+        String sql = "SELECT * FROM producto where marca like '"+valor+"' ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto pro = new Producto();
+                pro.setId(rs.getInt("id"));
+                pro.setCodigo(rs.getString("codigo"));
+                pro.setMarca(rs.getString("marca"));
+                pro.setTalla(rs.getInt("talla"));
+                pro.setDescripcion(rs.getString("descripcion"));
+                pro.setCantidad(rs.getInt("cantidad"));
+                pro.setPrecio(rs.getInt("precio"));
+                pro.setProvedor(rs.getString("provedor"));
+                Listapro.add(pro);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return Listapro;
     }
 
     public List ListarProducto() {
