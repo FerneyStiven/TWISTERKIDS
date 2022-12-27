@@ -787,6 +787,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnEditarProd.setText("EDITAR");
+        btnEditarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProdActionPerformed(evt);
+            }
+        });
 
         btnEliminarProd.setText("ELIMINAR");
         btnEliminarProd.addActionListener(new java.awt.event.ActionListener() {
@@ -1207,7 +1212,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
-        if ("0".equals(txtIdProveedor.getText())) {
+        if ("".equals(txtIdProveedor.getText())) {
             JOptionPane.showMessageDialog(null, "selecione una fila");
         } else {
             if (!"".equals(txtDocumentoProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtCorreoProveedor.getText())) {
@@ -1285,6 +1290,28 @@ public class Sistema extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione una fila para eliminar");
         }
     }//GEN-LAST:event_btnEliminarProdActionPerformed
+
+    private void btnEditarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProdActionPerformed
+        if ("".equals(txtIdProd.getText())) {
+            JOptionPane.showMessageDialog(null, "selecione una fila");
+        } else {
+            if (!"".equals(txtCodigoProd.getText()) || !"".equals(txtMarcaProd.getText()) || !"".equals(txtTallaProd.getText()) || !"".equals(txtDescripcionProd.getText()) || !"".equals(txtCantidaProd.getText()) || !"".equals(txtPrecioProd.getText()) || !"".equals(cbxProveedorProd.getSelectedItem())) {
+                pro.setCodigo(txtCodigoProd.getText());
+                pro.setMarca(txtMarcaProd.getText());
+                pro.setTalla(Integer.parseInt(txtTallaProd.getText()));
+                pro.setDescripcion(txtDescripcionProd.getText());
+                pro.setCantidad(Integer.parseInt(txtCantidaProd.getText()));
+                pro.setPrecio(Integer.parseInt(txtPrecioProd.getText()));
+                pro.setProvedor(cbxProveedorProd.getSelectedItem().toString());
+                pro.setId(Integer.parseInt(txtIdProd.getText()));
+                proDao.ModificarProducto(pro);
+                JOptionPane.showMessageDialog(null, "Producto editado");
+                LimpirarTable();
+                ListarProducto();
+                LimpiarProducto();
+            }
+        }
+    }//GEN-LAST:event_btnEditarProdActionPerformed
 
     /**
      * @param args the command line arguments

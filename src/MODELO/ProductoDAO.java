@@ -85,7 +85,7 @@ public class ProductoDAO {
             ps.execute();
             return true;
         } catch (SQLException e) {
-          
+
             System.out.println(e.toString());
             return false;
         } finally {
@@ -98,16 +98,20 @@ public class ProductoDAO {
         }
 
     }
-    
-      public boolean ModificarProducto(Cliente cl) {
-        String sql = "Update cliente SET documento=?,nombre =?, correo=? , telefono=? WHERE  id=?;";
+
+    public boolean ModificarProducto(Producto pro) {
+        String sql = "Update producto SET codigo=?, marca =?, talla=? , descripcion=?, cantidad=?, precio=?, provedor=? WHERE  id=? ;";
+
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, cl.getDocumento());
-            ps.setString(2, cl.getNombre());
-            ps.setString(3, cl.getCorreo());
-            ps.setString(4, cl.getTelefono());
-            ps.setInt(5, cl.getId());
+            ps.setString(1, pro.getCodigo());
+            ps.setString(2, pro.getMarca());
+            ps.setInt(3, pro.getTalla());
+            ps.setString(4, pro.getDescripcion());
+            ps.setInt(5, pro.getCantidad());
+            ps.setInt(6, pro.getPrecio());
+            ps.setString(7, pro.getProvedor());
+            ps.setInt(8, pro.getId());
             ps.execute();
 
             return true;
