@@ -98,4 +98,30 @@ public class ProductoDAO {
         }
 
     }
+    
+      public boolean ModificarProducto(Cliente cl) {
+        String sql = "Update cliente SET documento=?,nombre =?, correo=? , telefono=? WHERE  id=?;";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cl.getDocumento());
+            ps.setString(2, cl.getNombre());
+            ps.setString(3, cl.getCorreo());
+            ps.setString(4, cl.getTelefono());
+            ps.setInt(5, cl.getId());
+            ps.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+            }
+        }
+
+    }
 }
