@@ -7,6 +7,7 @@ package VISTA;
 import MODELO.Cliente;
 import MODELO.ClienteDAO;
 import MODELO.Conexion;
+import MODELO.Detalle;
 import MODELO.Producto;
 import MODELO.ProductoDAO;
 import MODELO.Provedor;
@@ -36,6 +37,7 @@ public class Sistema extends javax.swing.JFrame {
     ProductoDAO proDao = new ProductoDAO();
     Venta v = new Venta();
     VentaDAO vDao = new VentaDAO();
+    Detalle de = new Detalle();
     int Totalpagar = 0;
 
     int item;
@@ -554,8 +556,8 @@ public class Sistema extends javax.swing.JFrame {
                                 .addGap(192, 192, 192))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtvendor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtvendor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 97, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -585,7 +587,7 @@ public class Sistema extends javax.swing.JFrame {
                                     .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCantidadVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtvalor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(7, 7, 7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -1663,6 +1665,7 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnimprimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimprimActionPerformed
         RestrarVenta();
+        RegistrarDetalle();
     }//GEN-LAST:event_btnimprimActionPerformed
 
     /**
@@ -1750,6 +1753,29 @@ public class Sistema extends javax.swing.JFrame {
 
     }
 
+    private void RegistrarDetalle(){
+        for (int i = 0; i < tableVenta.getRowCount(); i++) {
+            String cod = tableVenta.getValueAt(i, 0).toString();
+            String marca = tableVenta.getValueAt(i, 1).toString();
+            int talla =Integer.parseInt( tableVenta.getValueAt(i, 2).toString());
+            int cant= Integer.parseInt(tableVenta.getValueAt(i, 4).toString());
+            int pre = Integer.parseInt(tableVenta.getValueAt(i, 5).toString());
+            int val = Integer.parseInt(tableVenta.getValueAt(i, 6).toString());
+            int tota= Integer.parseInt(tableVenta.getValueAt(i, 7).toString());
+            int id = 1;
+            de.setCodigopro(cod);
+            de.setMarca(marca);
+            de.setTall(talla);
+            de.setCantidad(cant);
+            de.setPrecio(pre);
+            de.setValor(val);
+            de.setTotal(tota);
+            de.setId_venta(id);
+            vDao.RegistrarDetalle(de);
+            
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelTotalVenta;
