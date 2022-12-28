@@ -1427,7 +1427,7 @@ public class Sistema extends javax.swing.JFrame {
             if (!"".equals(txtCantidadVenta.getText())) {
                 String cod = txtCodigoVenta.getText();
                 String marca = txtMarcaVenta.getText();
-                int talla = Integer.parseInt(txttallaven.getText());
+                String talla = txttallaven.getText();
                 String descripcion = txtDescripcionVenta.getText();
                 int cant = Integer.parseInt(txtCantidadVenta.getText());
                 int precio = Integer.parseInt(txtPrecioVenta.getText());
@@ -1437,7 +1437,7 @@ public class Sistema extends javax.swing.JFrame {
                     item = item + 1;
                     modelo = (DefaultTableModel) tableVenta.getModel();
                     for (int i = 0; i < tableVenta.getRowCount(); i++) {
-                        if (tableVenta.getValueAt(i, 0).equals(txtCodigoProd.getText())) {
+                        if (tableVenta.getValueAt(i, 0).equals(txtCodigoVenta.getText()) && tableVenta.getValueAt(i, 2).equals(txttallaven.getText())) {
                             JOptionPane.showMessageDialog(null, "El producto ya esta registrado");
                             return;
                         }
@@ -1493,7 +1493,7 @@ public class Sistema extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!"".equals(txttallaven.getText())) {
                 int val = Integer.parseInt(txttallaven.getText());
-                if (val >= 20 && val <= 30) {
+                if (val >= 21 && val <= 35) {
                     txtPrecioVenta.requestFocus();
                 } else {
                     JOptionPane.showMessageDialog(null, "Ingrese una talla valida");
