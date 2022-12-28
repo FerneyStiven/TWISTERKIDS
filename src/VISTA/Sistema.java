@@ -1739,31 +1739,15 @@ public class Sistema extends javax.swing.JFrame {
     }
 
     private void RestrarVenta() {
-        try {
 
-            for (int i = 0; i < tableVenta.getRowCount(); i++) {
-                String cliente = txtNombreVenta.getText();
-                String vendedor = txtvendor.getText();
-                int monto =Totalpagar;
-                v.setCliente(cliente);
-                v.setVendedor(vendedor);
-                v.setCodigo(tableVenta.getValueAt(i, 0).toString());
-                v.setMarca(tableVenta.getValueAt(i, 1).toString());
-                v.setTalla(Integer.parseInt(tableVenta.getValueAt(i, 2).toString()));
-                v.setDescripcion(tableVenta.getValueAt(i, 3).toString());
-                v.setCantidad(Integer.parseInt(tableVenta.getValueAt(i, 4).toString()));
-                v.setPrecio(Integer.parseInt(tableVenta.getValueAt(i, 5).toString()));
-                v.setValor(Integer.parseInt(tableVenta.getValueAt(i, 6).toString()));
-                v.setTotal(Integer.parseInt(tableVenta.getValueAt(i, 7).toString()));
-                v.setTotalp(monto);
-                System.out.println(v);
-                vDao.Registrarven(v);
-                
-                
-            }
-        } catch (NumberFormatException e) {
-            System.out.println(e.toString());
-        }
+        String cliente = txtNombreVenta.getText();
+        String vendedor = txtvendor.getText();
+        int monto = Totalpagar;
+        v.setCliente(cliente);
+        v.setVendedor(vendedor);
+        v.setTotal(monto);
+        vDao.Registrarven(v);
+
     }
 
 
