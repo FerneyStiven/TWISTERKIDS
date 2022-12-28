@@ -115,4 +115,25 @@ public class ClienteDAO {
 
     }
 
+    public Cliente BuscarCliente(String documento) {
+        Cliente cl = new Cliente();
+        String sql = "Select * from cliente where  documento= ?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, documento);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cl.setDocumento(rs.getString("documento"));
+                cl.setNombre(rs.getString("nombre"));
+                cl.setCorreo(rs.getString("correo"));
+                cl.setTelefono(rs.getString("telefono"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return cl;
+
+    }
+
 }
