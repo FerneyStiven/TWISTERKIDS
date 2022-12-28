@@ -205,7 +205,7 @@
                               <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="LabelTotalVenta" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="182" max="32767" attributes="0"/>
+                              <EmptySpace pref="248" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -478,9 +478,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="LabelTotalVenta">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="**********************"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnsalir1">
               <Properties>

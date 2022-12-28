@@ -28,6 +28,7 @@ public class Sistema extends javax.swing.JFrame {
     ProvedorDAO prDao = new ProvedorDAO();
     Producto pro = new Producto();
     ProductoDAO proDao = new ProductoDAO();
+    int Totalpagar = 0;
 
     int item;
 
@@ -409,8 +410,6 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel27.setText("TOTAL A PAGAR");
 
-        LabelTotalVenta.setText("**********************");
-
         btnsalir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/eliminar.png"))); // NOI18N
 
         jLabel36.setText("CANTIDAD");
@@ -442,7 +441,7 @@ public class Sistema extends javax.swing.JFrame {
                         .addComponent(jLabel27)
                         .addGap(30, 30, 30)
                         .addComponent(LabelTotalVenta)
-                        .addContainerGap(182, Short.MAX_VALUE))
+                        .addContainerGap(248, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1437,6 +1436,13 @@ public class Sistema extends javax.swing.JFrame {
                 if (stock >= cant) {
                     item = item + 1;
                     modelo = (DefaultTableModel) tableVenta.getModel();
+                    for (int i = 0; i < tableVenta.getRowCount(); i++) {
+                        if (tableVenta.getValueAt(i, 0).equals(txtCodigoProd.getText())) {
+                            JOptionPane.showMessageDialog(null, "El producto ya esta registrado");
+                            return;
+                        }
+                        
+                    }
                     ArrayList lista = new ArrayList();
                     lista.add(item);
                     lista.add(cod);
@@ -1456,6 +1462,7 @@ public class Sistema extends javax.swing.JFrame {
                     o[6] = lista.get(7);
                     modelo.addRow(o);
                     tableVenta.setModel(modelo);
+                    totaPagar();
 
                 } else {
                     JOptionPane.showMessageDialog(null, "EL NUMERO DE UNIDADES SUPERA LAS PERMITIDAS");
@@ -1560,6 +1567,16 @@ public class Sistema extends javax.swing.JFrame {
         txtCantidaProd.setText("");
         txtPrecioProd.setText("");
         cbxProveedorProd.setSelectedItem(null);
+    }
+    
+    private void totaPagar(){
+       Totalpagar = 0;
+       int  numfila = tableVenta.getRowCount();
+        for (int i = 0; i < numfila; i++) {
+            int  calcular = Integer.parseInt(String.valueOf(tableVenta.getModel().getValueAt(i, 6)));
+            Totalpagar = Totalpagar + calcular;
+        }
+       LabelTotalVenta.setText(""+Totalpagar);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelTotalVenta;
