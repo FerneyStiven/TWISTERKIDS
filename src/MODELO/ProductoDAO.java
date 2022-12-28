@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import MODELO.Producto;
 import javax.swing.JOptionPane;
 
 public class ProductoDAO {
@@ -157,4 +158,25 @@ public class ProductoDAO {
         }
 
     }
+    
+    public Producto BuscarPro(String cod){
+        Producto producto = new Producto();
+        String sql = "Select * from producto where codigo = ?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1,cod);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                producto.setMarca(rs.getString("marca"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setCantidad(rs.getInt("cantidad"));
+                producto.setPrecio(rs.getInt("precio"));
+                
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return producto;
+}
 }
