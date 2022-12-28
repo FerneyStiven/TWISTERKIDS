@@ -6,12 +6,18 @@ package VISTA;
 
 import MODELO.Cliente;
 import MODELO.ClienteDAO;
+import MODELO.Conexion;
 import MODELO.Producto;
 import MODELO.ProductoDAO;
 import MODELO.Provedor;
 import MODELO.ProvedorDAO;
+import MODELO.Venta;
+import MODELO.VentaDAO;
 import Reportes.Excel;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +34,8 @@ public class Sistema extends javax.swing.JFrame {
     ProvedorDAO prDao = new ProvedorDAO();
     Producto pro = new Producto();
     ProductoDAO proDao = new ProductoDAO();
+    Venta v = new Venta();
+    VentaDAO vDao = new VentaDAO();
     int Totalpagar = 0;
 
     int item;
@@ -172,6 +180,8 @@ public class Sistema extends javax.swing.JFrame {
         txtteleven = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jLabel38 = new javax.swing.JLabel();
+        txtvendor = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -426,6 +436,11 @@ public class Sistema extends javax.swing.JFrame {
         jLabel9.setText("IDENTIFICACIÓN");
 
         btnimprim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/print.png"))); // NOI18N
+        btnimprim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnimprimActionPerformed(evt);
+            }
+        });
 
         txtDocumentoVenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -464,6 +479,8 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel38.setText("VALOR");
 
+        jLabel39.setText("VENDEDOR");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -471,29 +488,6 @@ public class Sistema extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDocumentoVenta)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtteleven, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(jTextField1))
-                        .addGap(43, 43, 43)
-                        .addComponent(btnimprim)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel27)
-                                .addGap(215, 215, 215))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(LabelTotalVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(192, 192, 192))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCodigoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
@@ -533,7 +527,35 @@ public class Sistema extends javax.swing.JFrame {
                                 .addComponent(btnsalir1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(45, 45, 45))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDocumentoVenta)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombreVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtteleven, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(jTextField1)))
+                            .addComponent(jLabel39))
+                        .addGap(43, 43, 43)
+                        .addComponent(btnimprim)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addGap(215, 215, 215))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(LabelTotalVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(192, 192, 192))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtvendor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 97, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -580,13 +602,18 @@ public class Sistema extends javax.swing.JFrame {
                         .addComponent(txtteleven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDocumentoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNombreVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDocumentoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel39))
                     .addComponent(btnimprim)
                     .addComponent(LabelTotalVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(txtvendor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         jTabbedPane1.addTab("tab1", jPanel2);
@@ -1465,7 +1492,7 @@ public class Sistema extends javax.swing.JFrame {
                     txtDescripcionVenta.setText("" + pro.getDescripcion());
                     txtstock.setText("" + pro.getCantidad());
                     txtPrecioVenta.setText("" + pro.getPrecio());
-                    txtvalor.setText(""+pro.getPrecio());
+                    txtvalor.setText("" + pro.getPrecio());
                     txttallaven.requestFocus();
                 } else {
                     txtMarcaVenta.setText("");
@@ -1522,7 +1549,7 @@ public class Sistema extends javax.swing.JFrame {
                     o[3] = lista.get(4);
                     o[4] = lista.get(5);
                     o[5] = lista.get(6);
-                    o[6] = lista.get(7); 
+                    o[6] = lista.get(7);
                     o[7] = lista.get(8);
                     modelo.addRow(o);
                     tableVenta.setModel(modelo);
@@ -1618,7 +1645,7 @@ public class Sistema extends javax.swing.JFrame {
         modelo.removeRow(tableVenta.getSelectedRow());
         totaPagar();
         txtCodigoVenta.requestFocus();
-        
+
 
     }//GEN-LAST:event_tableVentaMouseClicked
 
@@ -1633,6 +1660,10 @@ public class Sistema extends javax.swing.JFrame {
     private void tableVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableVentaKeyPressed
 
     }//GEN-LAST:event_tableVentaKeyPressed
+
+    private void btnimprimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimprimActionPerformed
+        RestrarVenta();
+    }//GEN-LAST:event_btnimprimActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1706,6 +1737,36 @@ public class Sistema extends javax.swing.JFrame {
         }
         LabelTotalVenta.setText("" + Totalpagar);
     }
+
+    private void RestrarVenta() {
+        try {
+
+            for (int i = 0; i < tableVenta.getRowCount(); i++) {
+                String cliente = txtNombreVenta.getText();
+                String vendedor = txtvendor.getText();
+                int monto =Totalpagar;
+                v.setCliente(cliente);
+                v.setVendedor(vendedor);
+                v.setCodigo(tableVenta.getValueAt(i, 0).toString());
+                v.setMarca(tableVenta.getValueAt(i, 1).toString());
+                v.setTalla(Integer.parseInt(tableVenta.getValueAt(i, 2).toString()));
+                v.setDescripcion(tableVenta.getValueAt(i, 3).toString());
+                v.setCantidad(Integer.parseInt(tableVenta.getValueAt(i, 4).toString()));
+                v.setPrecio(Integer.parseInt(tableVenta.getValueAt(i, 5).toString()));
+                v.setValor(Integer.parseInt(tableVenta.getValueAt(i, 6).toString()));
+                v.setTotal(Integer.parseInt(tableVenta.getValueAt(i, 7).toString()));
+                v.setTotalp(monto);
+                System.out.println(v);
+                vDao.Registrarven(v);
+                
+                
+            }
+        } catch (NumberFormatException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelTotalVenta;
     private javax.swing.JTable TableCliente;
@@ -1767,6 +1828,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1818,6 +1880,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txttallaven;
     private javax.swing.JTextField txtteleven;
     private javax.swing.JTextField txtvalor;
+    private javax.swing.JTextField txtvendor;
     // End of variables declaration//GEN-END:variables
 
 }
