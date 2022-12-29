@@ -133,6 +133,7 @@ public class Sistema extends javax.swing.JFrame {
         List<Producto> ListarPro = proDao.BuscarProducto();
         modelo = (DefaultTableModel) TableProducto.getModel();
         LimpirarTable();
+        //hola
         Object[] ob = new Object[8];
         for (int i = 0; i < ListarPro.size(); i++) {
             ob[0] = ListarPro.get(i).getId();
