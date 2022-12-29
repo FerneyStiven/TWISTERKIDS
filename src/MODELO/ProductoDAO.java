@@ -54,10 +54,10 @@ public class ProductoDAO {
     }
 
     public List BuscarProducto() {
-        String valor = JOptionPane.showInputDialog(null, "Digite una Marca", "BUSCAR CALZADO", JOptionPane.PLAIN_MESSAGE);
+        String valor = JOptionPane.showInputDialog(null, "Digite una Referencia", "BUSCAR CALZADO", JOptionPane.PLAIN_MESSAGE);
        
          List<Producto> Listapro = new ArrayList();
-        String sql = "SELECT * FROM producto where marca like '"+valor+"' ";
+        String sql = "SELECT * FROM producto where codigo like '"+valor+"' ";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
