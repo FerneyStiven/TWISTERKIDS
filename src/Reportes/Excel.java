@@ -71,7 +71,7 @@ public class Excel {
  
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 3));
  
-            String[] cabecera = new String[]{"Código", "marca", "Precio", "Existencia"};
+            String[] cabecera = new String[]{"Código", "Marca", "Talla", "Precio","Exitencia","Proveedor"};
  
             CellStyle headerStyle = book.createCellStyle();
             headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
@@ -108,8 +108,7 @@ public class Excel {
             datosEstilo.setBorderLeft(BorderStyle.THIN);
             datosEstilo.setBorderRight(BorderStyle.THIN);
             datosEstilo.setBorderBottom(BorderStyle.THIN);
- 
-            ps = conn.prepareStatement("SELECT codigo, marca, precio, cantidad FROM producto");
+            ps = conn.prepareStatement("SELECT codigo, marca, talla,precio, cantidad,provedor FROM producto");
             rs = ps.executeQuery();
  
             int numCol = rs.getMetaData().getColumnCount();
