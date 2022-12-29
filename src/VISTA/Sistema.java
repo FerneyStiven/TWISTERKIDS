@@ -28,6 +28,8 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
@@ -64,7 +66,7 @@ public class Sistema extends javax.swing.JFrame {
         txtidventa.setVisible(false);
         AutoCompleteDecorator.decorate(cbxProveedorProd);
         proDao.ConsulatarProvedor(cbxProveedorProd);
-        pdf();
+       
     }
 
     public void ListarCliente() {
@@ -1690,6 +1692,7 @@ public class Sistema extends javax.swing.JFrame {
         RestrarVenta();
         RegistrarDetalle();
         Actualizarcantidad();
+         pdf();
         LimpiarTableVenta();
         LimpiarClienteVenta();
     }//GEN-LAST:event_btnimprimActionPerformed
@@ -1888,6 +1891,84 @@ public class Sistema extends javax.swing.JFrame {
             Encabezado.addCell("Ruc: " + ruc + "\nNombre :" + nombre + "\nTelefono: " + Telefono + "\nDireccion: " + Direcion + "\nRazon: " + Razon);
             Encabezado.addCell(fecha);
             doc.add(Encabezado);
+
+            Paragraph cli = new Paragraph();
+            cli.add(Chunk.NEWLINE);
+            cli.add("Datos del cliente\n\n");
+            doc.add(cli);
+
+            PdfPTable tableclient = new PdfPTable(4);
+            tableclient.setWidthPercentage(100);
+            tableclient.getDefaultCell().setBorder(0);
+            float[] Columnaclient = new float[]{30f, 50f, 40f, 50f};
+            tableclient.setWidths(Columnaclient);
+            tableclient.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell cli1 = new PdfPCell(new Phrase("Documento",negrita));
+            PdfPCell cli2 = new PdfPCell(new Phrase("Nombre",negrita));
+            PdfPCell cli3 = new PdfPCell(new Phrase("Telefono",negrita));
+            PdfPCell cli4 = new PdfPCell(new Phrase("Correo",negrita));
+            cli1.setBorder(0);
+            cli2.setBorder(0);
+            cli3.setBorder(0);
+            cli4.setBorder(0);
+            tableclient.addCell(cli1);
+            tableclient.addCell(cli2);
+            tableclient.addCell(cli3);
+            tableclient.addCell(cli4);
+            tableclient.addCell(txtDocumentoVenta.getText());
+            tableclient.addCell(txtNombreVenta.getText());
+            tableclient.addCell(txtteleven.getText());
+            tableclient.addCell(txtcorreov.getText() + "\n\n");
+
+            doc.add(tableclient);
+
+            //productos
+            PdfPTable tableproducto = new PdfPTable(5);
+            tableproducto.setWidthPercentage(100);
+            tableproducto.getDefaultCell().setBorder(0);
+            float[] Columnaprod = new float[]{40f, 40f, 40f, 40f, 40f};
+            tableproducto.setWidths(Columnaprod);
+            tableproducto.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell pro1 = new PdfPCell(new Phrase("Referencia",negrita));
+            PdfPCell pro2 = new PdfPCell(new Phrase("Marca",negrita));
+            PdfPCell pro3 = new PdfPCell(new Phrase("Unidades",negrita));
+            PdfPCell pro4 = new PdfPCell(new Phrase("Precio U.",negrita));
+            PdfPCell pro5 = new PdfPCell(new Phrase("Precio T.",negrita));
+            pro1.setBorder(0);
+            pro2.setBorder(0);
+            pro3.setBorder(0);
+            pro4.setBorder(0);
+            pro5.setBorder(0);
+            pro1.setBackgroundColor(BaseColor.GREEN);
+            pro2.setBackgroundColor(BaseColor.GREEN);
+            pro3.setBackgroundColor(BaseColor.GREEN);
+            pro4.setBackgroundColor(BaseColor.GREEN);
+            pro5.setBackgroundColor(BaseColor.GREEN);
+            
+            
+            tableproducto.addCell(pro1);
+            tableproducto.addCell(pro2);
+            tableproducto.addCell(pro3);
+            tableproducto.addCell(pro4);
+            tableproducto.addCell(pro5);
+            for (int i = 0; i < tableVenta.getRowCount(); i++) {
+                String Ref = tableVenta.getValueAt(i, 0).toString();
+                String Mar = tableVenta.getValueAt(i, 1).toString();
+                String Uni = tableVenta.getValueAt(i, 4).toString();
+                String PreU = tableVenta.getValueAt(i, 5).toString();
+                String PreT = tableVenta.getValueAt(i, 7).toString();
+                tableproducto.addCell(Ref);
+                tableproducto.addCell(Mar);
+                tableproducto.addCell(Uni);
+                tableproducto.addCell(PreU);
+                tableproducto.addCell(PreT);
+
+            }
+
+            doc.add(tableproducto);
+            
+           
+            
 
             doc.close();
             archivo.close();
