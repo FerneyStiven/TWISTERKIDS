@@ -6,7 +6,6 @@ package VISTA;
 
 import MODELO.Cliente;
 import MODELO.ClienteDAO;
-import MODELO.Conexion;
 import MODELO.Detalle;
 import MODELO.Producto;
 import MODELO.ProductoDAO;
@@ -15,16 +14,29 @@ import MODELO.ProvedorDAO;
 import MODELO.Venta;
 import MODELO.VentaDAO;
 import Reportes.Excel;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Sistema extends javax.swing.JFrame {
 
@@ -52,7 +64,7 @@ public class Sistema extends javax.swing.JFrame {
         txtidventa.setVisible(false);
         AutoCompleteDecorator.decorate(cbxProveedorProd);
         proDao.ConsulatarProvedor(cbxProveedorProd);
-
+        pdf();
     }
 
     public void ListarCliente() {
@@ -245,8 +257,6 @@ public class Sistema extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -259,6 +269,8 @@ public class Sistema extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
+        jdateinicial = new com.toedter.calendar.JDateChooser();
+        jdatefinal = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -1156,8 +1168,8 @@ public class Sistema extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jdatefinal, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1175,9 +1187,9 @@ public class Sistema extends javax.swing.JFrame {
                                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(139, 139, 139)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jdateinicial, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(197, 197, 197)
                                 .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(91, 91, 91)
                                 .addComponent(jButton6)))
@@ -1194,19 +1206,19 @@ public class Sistema extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton21)
-                            .addComponent(jButton6))))
-                .addGap(8, 8, 8)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton6)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jdateinicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel29))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel30)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdatefinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
@@ -1223,7 +1235,7 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(jLabel34)
                             .addComponent(jLabel33)
                             .addComponent(jLabel35))
-                        .addContainerGap(113, Short.MAX_VALUE))
+                        .addContainerGap(115, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1240,7 +1252,7 @@ public class Sistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnventanueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnventanueActionPerformed
-        
+
         jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_btnventanueActionPerformed
 
@@ -1725,8 +1737,9 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
     }
-    private void LimpiarClienteVenta(){
-         txtDocumentoVenta.setText("");
+
+    private void LimpiarClienteVenta() {
+        txtDocumentoVenta.setText("");
         txtNombreVenta.setText("");
         txtNombreVenta.setText("");
         txtcorreov.setText("");
@@ -1819,31 +1832,71 @@ public class Sistema extends javax.swing.JFrame {
         }
 
     }
-    
-    
-    private void Actualizarcantidad(){
+
+    private void Actualizarcantidad() {
         for (int i = 0; i < tableVenta.getRowCount(); i++) {
             String cod = tableVenta.getValueAt(i, 0).toString();
             int talla = Integer.parseInt(tableVenta.getValueAt(i, 2).toString());
-            int cant  = Integer.parseInt(tableVenta.getValueAt(i, 4).toString());
+            int cant = Integer.parseInt(tableVenta.getValueAt(i, 4).toString());
             pro = proDao.BuscarPro(cod);
-            int CantidadActual = pro.getCantidad()- cant;
-            vDao.ActualizarCantidad(CantidadActual, cod,talla);
+            int CantidadActual = pro.getCantidad() - cant;
+            vDao.ActualizarCantidad(CantidadActual, cod, talla);
         }
     }
-    
-    
-    private void LimpiarTableVenta(){
+
+    private void LimpiarTableVenta() {
         tmp = (DefaultTableModel) tableVenta.getModel();
-        int fila =tableVenta.getRowCount();
+        int fila = tableVenta.getRowCount();
         for (int i = 0; i < fila; i++) {
-           tmp.removeRow(0);
+            tmp.removeRow(0);
         }
-        
+
     }
-    
-        
-    
+
+    private void pdf() {
+        try {
+            FileOutputStream archivo;
+            File file = new File("src/PDF/venta.pdf");
+            archivo = new FileOutputStream(file);
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, archivo);
+            doc.open();
+            Image img = Image.getInstance("src/img/lg1.png");
+
+            Paragraph fecha = new Paragraph();
+            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
+            fecha.add(Chunk.NEWLINE);
+            Date date = new Date();
+            fecha.add("Factura: 1\n" + "Fecha: " + new SimpleDateFormat("dd-mm-yyyy").format(date) + "\n\n");
+
+            PdfPTable Encabezado = new PdfPTable(4);
+            Encabezado.setWidthPercentage(100);
+            Encabezado.getDefaultCell().setBorder(0);
+            float[] ColumnaEncabezado = new float[]{20f, 30f, 70f, 40f};
+            Encabezado.setWidths(ColumnaEncabezado);
+            Encabezado.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            Encabezado.addCell(img);
+
+            String ruc = "Panama local 111";
+            String nombre = "Twister Kids";
+            String Telefono = "3155916337";
+            String Direcion = "Bucaramanga";
+            String Razon = "Venta de calzado";
+
+            Encabezado.addCell("");
+            Encabezado.addCell("Ruc: " + ruc + "\nNombre :" + nombre + "\nTelefono: " + Telefono + "\nDireccion: " + Direcion + "\nRazon: " + Razon);
+            Encabezado.addCell(fecha);
+            doc.add(Encabezado);
+
+            doc.close();
+            archivo.close();
+
+        } catch (DocumentException | IOException e) {
+            System.out.println(e.toString());
+        }
+
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1873,8 +1926,6 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxProveedorProd;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton6;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1929,6 +1980,8 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable5;
+    private com.toedter.calendar.JDateChooser jdatefinal;
+    private com.toedter.calendar.JDateChooser jdateinicial;
     private javax.swing.JTable tableVenta;
     private javax.swing.JTextField txtCantidaProd;
     private javax.swing.JTextField txtCantidadVenta;
