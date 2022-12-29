@@ -231,6 +231,8 @@
                                       <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txtidventa" min="-2" pref="29" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="btnsalir1" min="-2" pref="37" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
@@ -252,7 +254,7 @@
                                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="txtteleven" pref="164" max="32767" attributes="0"/>
-                                          <Component id="jTextField1" max="32767" attributes="0"/>
+                                          <Component id="txtcorreov" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -300,8 +302,9 @@
                                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtidventa" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="txtCodigoVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtMarcaVenta" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -346,7 +349,7 @@
                           </Group>
                           <Component id="btnimprim" min="-2" max="-2" attributes="0"/>
                           <Component id="LabelTotalVenta" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtcorreov" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="9" max="32767" attributes="0"/>
                       <Component id="txtvendor" min="-2" max="-2" attributes="0"/>
@@ -547,6 +550,7 @@
             <Component class="javax.swing.JTextField" name="txtstock">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtstockActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtstockKeyPressed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtvalor">
@@ -558,7 +562,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtteleven">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="txtcorreov">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel38">
               <Properties>
@@ -571,6 +575,11 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="VENDEDOR"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtidventa">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtidventaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

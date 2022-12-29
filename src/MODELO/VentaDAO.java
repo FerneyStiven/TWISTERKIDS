@@ -14,6 +14,23 @@ public class VentaDAO {
     PreparedStatement ps;
     ResultSet rs;
     int r;
+    
+    public int IdVenta(){
+        int id =0;
+        String sql = "Select MAX(id) from venta ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return id;
+    }
 
     public int Registrarven(Venta v) {
         String sql = "Insert into venta ( cliente,vendedor,total,fecha )values(?,?,?,current_timestamp())";
@@ -61,5 +78,21 @@ public class VentaDAO {
             }
         }
         return r;
+    }
+    
+    public boolean ActualizarCantidad(int cant,String cod,int talla){
+        String sql = "update producto Set cantidad = ? where codigo = ? and talla = ?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cant);
+            ps.setString(2,cod);
+            ps.setInt(3, talla);
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
     }
 }
