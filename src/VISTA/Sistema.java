@@ -55,6 +55,7 @@ public class Sistema extends javax.swing.JFrame {
     Detalle de = new Detalle();
     int Totalpagar = 0;
     int Totalcambio = 0;
+    int Dinerorec=0;
 
     int item;
 
@@ -1756,10 +1757,9 @@ public class Sistema extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!"".equals(txtRecibe.getText())) {
                 totalCambio();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "El de recibido no puede estar vacio");
             }
-            
 
         }
     }//GEN-LAST:event_txtRecibeKeyPressed
@@ -1926,8 +1926,9 @@ public class Sistema extends javax.swing.JFrame {
 
     private void pdf() {
         try {
+            int id =vDao.IdVenta();
             FileOutputStream archivo;
-            File file = new File("src/PDF/venta.pdf");
+            File file = new File("src/PDF/venta"+id+".pdf");
             archivo = new FileOutputStream(file);
             Document doc = new Document();
             PdfWriter.getInstance(doc, archivo);
@@ -1938,7 +1939,7 @@ public class Sistema extends javax.swing.JFrame {
             Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
             fecha.add(Chunk.NEWLINE);
             Date date = new Date();
-            fecha.add("Factura: 1\n" + "Fecha: " + new SimpleDateFormat("dd-mm-yyyy").format(date) + "\n\n");
+            fecha.add("Factura: "+id+"\n" + "Fecha: " + new SimpleDateFormat("dd-mm-yyyy").format(date) + "\n\n");
 
             PdfPTable Encabezado = new PdfPTable(4);
             Encabezado.setWidthPercentage(100);
@@ -2034,8 +2035,41 @@ public class Sistema extends javax.swing.JFrame {
 
             doc.add(tableproducto);
 
+            Paragraph info = new Paragraph();
+            info.add(Chunk.NEWLINE);
+            String totalp = LabelTotalVenta.getText();
+            info.add("Total a pagar          " +totalp );
+            info.add("\n\n");
+            info.setAlignment(Element.ALIGN_LEFT);
+            doc.add(info);
+            
+            Paragraph rec = new Paragraph();
+            rec.add(Chunk.NEWLINE);
+            String dinerorec = txtRecibe.getText();
+            rec.add("Monto                     " + dinerorec);
+            info.add("\n\n");
+            rec.setAlignment(Element.ALIGN_LEFT);
+            doc.add(rec);
+            
+            Paragraph camb = new Paragraph();
+            camb.add(Chunk.NEWLINE);
+            String totalcam= txtcambio.getText();
+            camb.add("Total De cambio     " + totalcam);
+            info.add("\n\n");
+            camb.setAlignment(Element.ALIGN_LEFT);
+            doc.add(camb);
+            
+            Paragraph mes = new Paragraph();
+            mes.add(Chunk.NEWLINE);
+            mes.add("Gracias por su compra");
+            mes.add("\n\n");
+            mes.setAlignment(Element.ALIGN_CENTER);
+            doc.add(mes);
+
             doc.close();
             archivo.close();
+            Desktop.getDesktop().open(file);
+            
 
         } catch (DocumentException | IOException e) {
             System.out.println(e.toString());
