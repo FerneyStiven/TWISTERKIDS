@@ -88,6 +88,7 @@ public class ClienteDAO {
         }
 
     }
+    
 
     public boolean ModificarCliente(Cliente cl) {
         String sql = "Update cliente SET documento=?,nombre =?, correo=? , telefono=? WHERE  id=?;";
