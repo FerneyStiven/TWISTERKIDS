@@ -1,5 +1,6 @@
 
 package Reportes;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,14 +34,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
- 
-public class Excel {
-    
-    
-    public static void reporte() {
+
+
+
+public class Excel2 {
+    public static void reporte(String fecha) {
  
         Workbook book = new XSSFWorkbook();
-        Sheet sheet = book.createSheet("Productos");
+        Sheet sheet = book.createSheet("Gastos");
  
         try {
             InputStream is = new FileInputStream("src/img/lg.png");
@@ -69,11 +70,11 @@ public class Excel {
             Row filaTitulo = sheet.createRow(1);
             Cell celdaTitulo = filaTitulo.createCell(1);
             celdaTitulo.setCellStyle(tituloEstilo);
-            celdaTitulo.setCellValue("Reporte de Productos");
+            celdaTitulo.setCellValue("Reporte Gastos");
  
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 3));
  
-            String[] cabecera = new String[]{"Código", "Marca", "Talla", "Precio","Exitencia","Proveedor"};
+            String[] cabecera = new String[]{"id","Tipo_Gasto", "Descripcion", "Cantidad","fecha"};
  
             CellStyle headerStyle = book.createCellStyle();
             headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
@@ -110,7 +111,8 @@ public class Excel {
             datosEstilo.setBorderLeft(BorderStyle.THIN);
             datosEstilo.setBorderRight(BorderStyle.THIN);
             datosEstilo.setBorderBottom(BorderStyle.THIN);
-            ps = conn.prepareStatement("SELECT codigo, marca, talla,precio, cantidad,provedor FROM producto");
+            String date = fecha;
+            ps = conn.prepareStatement("SELECT * FROM gasto where fecha like '"+date+"' ");
             rs = ps.executeQuery();
  
             int numCol = rs.getMetaData().getColumnCount();
@@ -135,9 +137,9 @@ public class Excel {
             sheet.autoSizeColumn(4);
             
             sheet.setZoom(150);
-            String fileName = "productos";
+            String fileName = "Gasto "+fecha;
             String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/Productos/" + fileName + ".xlsx");
+            File file = new File(home + "/Downloads/GastosE/" + fileName + ".xlsx");
             FileOutputStream fileOut = new FileOutputStream(file);
             book.write(fileOut);
             fileOut.close();
@@ -151,6 +153,5 @@ public class Excel {
         }
  
     }
+    
 }
-
-
