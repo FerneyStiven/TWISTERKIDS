@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import MODELO.Detalle;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class VentaDAO {
 
@@ -94,5 +97,59 @@ public class VentaDAO {
             System.out.println(e.toString());
             return false;
         }
+    }
+    
+    
+        public List Listarcliente() {
+        List<Cliente> ListaCl = new ArrayList();
+        String sql = "SELECT * FROM cliente";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cliente cl = new Cliente();
+                cl.setId(rs.getInt("id"));
+                cl.setDocumento(rs.getString("documento"));
+                cl.setNombre(rs.getString("nombre"));
+                cl.setCorreo(rs.getString("correo"));
+                cl.setTelefono(rs.getString("telefono"));
+                ListaCl.add(cl);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaCl;
+    }
+    
+     public List ListarVentas(String date) {
+        List<Detalle> ListaVen = new ArrayList();
+        String sql = "SELECT * FROM detalle where fecha like '"+date+"' ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Detalle de = new Detalle();
+                de.setId(rs.getInt("id"));
+                de.setCodigopro(rs.getString("codigopro"));
+                de.setMarca(rs.getString("marca"));
+                de.setTall(rs.getInt("talla"));
+                de.setCantidad(rs.getInt("cantidad"));
+                de.setPrecio(rs.getInt("precio"));
+                de.setValor(rs.getInt("valor"));
+                de.setTotal(rs.getInt("total"));
+                de.setId_venta(rs.getInt("id_venta"));
+                de.setFecha(rs.getString("fecha"));
+                
+                ListaVen.add(de);
+                        
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaVen;
     }
 }

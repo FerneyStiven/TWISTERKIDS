@@ -12,11 +12,12 @@ public class Detalle {
     private int valor;
     private int total;
     private int id_venta;
+    private String fecha;
 
     public Detalle() {
     }
 
-    public Detalle(int id, String codigopro, String marca, int tall, int cantidad, int precio, int valor, int total, int id_venta) {
+    public Detalle(int id, String codigopro, String marca, int tall, int cantidad, int precio, int valor, int total, int id_venta,String fecha) {
         this.id = id;
         this.codigopro = codigopro;
         this.marca = marca;
@@ -26,6 +27,15 @@ public class Detalle {
         this.valor = valor;
         this.total = total;
         this.id_venta = id_venta;
+        this.fecha=fecha;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public int getId() {
