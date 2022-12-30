@@ -100,28 +100,7 @@ public class VentaDAO {
     }
     
     
-        public List Listarcliente() {
-        List<Cliente> ListaCl = new ArrayList();
-        String sql = "SELECT * FROM cliente";
-        try {
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Cliente cl = new Cliente();
-                cl.setId(rs.getInt("id"));
-                cl.setDocumento(rs.getString("documento"));
-                cl.setNombre(rs.getString("nombre"));
-                cl.setCorreo(rs.getString("correo"));
-                cl.setTelefono(rs.getString("telefono"));
-                ListaCl.add(cl);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.toString());
-        }
-        return ListaCl;
-    }
+  
     
      public List ListarVentas(String date) {
         List<Detalle> ListaVen = new ArrayList();

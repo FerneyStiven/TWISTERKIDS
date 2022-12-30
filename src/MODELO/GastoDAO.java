@@ -109,4 +109,29 @@ public class GastoDAO {
         }
 
     }
+    
+     public List ListarVentas(String date) {
+        List<Gasto> ListaGas = new ArrayList();
+        String sql = "SELECT * FROM gasto where fecha like '"+date+"' ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Gasto ga = new Gasto();
+                ga.setId(rs.getInt("id"));
+                ga.setTipogasto(rs.getString("tipogasto"));
+                ga.setDescripcion(rs.getString("descripcion"));
+                ga.setCantidad(rs.getInt("cantidad"));
+                ga.setFecha(rs.getString("fecha"));
+                
+                ListaGas.add(ga);
+                        
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaGas;
+    }
 }
