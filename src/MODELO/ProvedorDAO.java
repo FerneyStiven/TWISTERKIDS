@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ProvedorDAO {
 
@@ -85,30 +86,56 @@ public class ProvedorDAO {
         }
 
     }
-    
-    public boolean ModificarProvedor(Provedor pr){
+
+    public boolean ModificarProvedor(Provedor pr) {
         String sql = "Update provedor set documento=?, nombre=?, telefono=?,correo=? where id =?";
         try {
             con = cn.getConnection();
-            ps= con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, pr.getDocumento());
-            ps.setString(2,pr.getNombre());
-            ps.setString(3,pr.getTelefono());
-            ps.setString(4,pr.getCorreo());
+            ps.setString(2, pr.getNombre());
+            ps.setString(3, pr.getTelefono());
+            ps.setString(4, pr.getCorreo());
             ps.setInt(5, pr.getId());
             ps.execute();
             return true;
         } catch (SQLException e) {
             System.out.println(e.toString());
-            return  false;
-        }finally{
+            return false;
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
-                System.out.println(ex.toString());  
+                System.out.println(ex.toString());
             }
         }
-        
+
+    }
+
+    public List BuscarPro() {
+        String valor = JOptionPane.showInputDialog(null, "Digite un Documento", "BUSCAR PROVEDOR", JOptionPane.PLAIN_MESSAGE);
+
+        List<Provedor> ListaPro = new ArrayList();
+        String sql = "SELECT * FROM provedor where documento like '" + valor + "' ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Provedor Pro = new Provedor();
+                Pro.setId(rs.getInt("id"));
+                Pro.setDocumento(rs.getString("documento"));
+                Pro.setNombre(rs.getString("nombre"));
+                Pro.setTelefono(rs.getString("telefono"));
+                Pro.setCorreo(rs.getString("correo"));
+
+                ListaPro.add(Pro);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaPro;
     }
 
 }

@@ -206,6 +206,7 @@ public class Sistema extends javax.swing.JFrame {
 
     }
 
+    //
     public void ListarBusqueda() {
         List<Producto> ListarPro = proDao.BuscarProducto();
         modelo = (DefaultTableModel) TableProducto.getModel();
@@ -225,6 +226,63 @@ public class Sistema extends javax.swing.JFrame {
 
         }
         TableProducto.setModel(modelo);
+
+    }
+
+    public void ListarBusquedaCli() {
+        List<Cliente> ListarCli = client.BuscarCli();
+        modelo = (DefaultTableModel) TableCliente.getModel();
+        LimpirarTable();
+        //hola
+        Object[] ob = new Object[5];
+        for (int i = 0; i < ListarCli.size(); i++) {
+            ob[0] = ListarCli.get(i).getId();
+            ob[1] = ListarCli.get(i).getDocumento();
+            ob[2] = ListarCli.get(i).getNombre();
+            ob[3] = ListarCli.get(i).getCorreo();
+            ob[4] = ListarCli.get(i).getTelefono();
+            modelo.addRow(ob);
+
+        }
+        TableCliente.setModel(modelo);
+
+    }
+    
+    public void ListarBusquedaGas() {
+        List<Gasto> ListarGa = gaDao.BuscarGas();
+        modelo = (DefaultTableModel) Tablegas.getModel();
+        LimpirarTable();
+        //hola
+        Object[] ob = new Object[5];
+        for (int i = 0; i < ListarGa.size(); i++) {
+            ob[0] = ListarGa.get(i).getId();
+            ob[1] = ListarGa.get(i).getTipogasto();
+            ob[2] = ListarGa.get(i).getDescripcion();
+            ob[3] = ListarGa.get(i).getCantidad();
+            ob[4] = ListarGa.get(i).getFecha();
+            modelo.addRow(ob);
+
+        }
+        Tablegas.setModel(modelo);
+
+    }
+
+    public void ListarBusquedaPro() {
+        List<Provedor> ListarPro = prDao.BuscarPro();
+        modelo = (DefaultTableModel) Tableprovedor.getModel();
+        LimpirarTable();
+        //hola
+        Object[] ob = new Object[5];
+        for (int i = 0; i < ListarPro.size(); i++) {
+            ob[0] = ListarPro.get(i).getId();
+            ob[1] = ListarPro.get(i).getDocumento();
+            ob[2] = ListarPro.get(i).getNombre();
+            ob[3] = ListarPro.get(i).getCorreo();
+            ob[4] = ListarPro.get(i).getTelefono();
+            modelo.addRow(ob);
+
+        }
+        Tableprovedor.setModel(modelo);
 
     }
 
@@ -302,6 +360,7 @@ public class Sistema extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         TableCliente = new javax.swing.JTable();
         txtidcliente = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -317,6 +376,7 @@ public class Sistema extends javax.swing.JFrame {
         txtIdProveedor = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
         Tableprovedor = new javax.swing.JTable();
+        btnBuscarprovedor = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -353,6 +413,7 @@ public class Sistema extends javax.swing.JFrame {
         Tablegas = new javax.swing.JTable();
         txtidgasto = new javax.swing.JTextField();
         btnelig = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         Tablevenf = new javax.swing.JTable();
@@ -475,7 +536,7 @@ public class Sistema extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 710));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/encabezado.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1000, 140));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1000, 10));
 
         jLabel3.setText("REFERENCIA");
 
@@ -927,6 +988,13 @@ public class Sistema extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(TableCliente);
 
+        jButton2.setText("BUSCAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -956,7 +1024,9 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(btnEliminarCliente)
                             .addComponent(btnGuardarCliente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditarCliente)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditarCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
@@ -989,7 +1059,9 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(btnEditarCliente)
                             .addComponent(btnGuardarCliente))
                         .addGap(32, 32, 32)
-                        .addComponent(btnEliminarCliente)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminarCliente)
+                            .addComponent(jButton2))))
                 .addContainerGap(248, Short.MAX_VALUE))
         );
 
@@ -1087,29 +1159,40 @@ public class Sistema extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(Tableprovedor);
 
+        btnBuscarprovedor.setText("BUSCAR");
+        btnBuscarprovedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarprovedorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel18))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnEditarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel15)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel17)
+                                .addComponent(jLabel18))
+                            .addGap(27, 27, 27)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txtTelefonoProveedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                                 .addComponent(txtNombreProveedor, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtDocumentoProveedor, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtCorreoProveedor))))
-                    .addComponent(btnGuardarProveedor)
-                    .addComponent(btnEliminarProveedor)
-                    .addComponent(txtIdProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCorreoProveedor)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnBuscarprovedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnEditarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
+                                    .addGap(54, 54, 54))))
+                        .addComponent(btnGuardarProveedor)
+                        .addComponent(txtIdProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEliminarProveedor))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -1142,7 +1225,9 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(btnGuardarProveedor)
                             .addComponent(btnEditarProveedor))
                         .addGap(31, 31, 31)
-                        .addComponent(btnEliminarProveedor))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminarProveedor)
+                            .addComponent(btnBuscarprovedor)))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(250, Short.MAX_VALUE))
         );
@@ -1417,14 +1502,14 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        btnagreg.setText("Agregar");
+        btnagreg.setText("AGREGAR");
         btnagreg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnagregActionPerformed(evt);
             }
         });
 
-        btnedigas.setText("Editar");
+        btnedigas.setText("EDITAR");
         btnedigas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnedigasActionPerformed(evt);
@@ -1446,10 +1531,17 @@ public class Sistema extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(Tablegas);
 
-        btnelig.setText("Elimininar");
+        btnelig.setText("ELIMINAR");
         btnelig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneligActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("BUSCAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -1458,45 +1550,43 @@ public class Sistema extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(txtidgasto, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnagreg, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnelig))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnagreg, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(btnelig))
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtdescgas)
-                                    .addComponent(txttipogas)
-                                    .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addComponent(btnedigas, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtdescgas)
+                            .addComponent(txttipogas)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(260, 260, 260)
-                        .addComponent(txtidgasto, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton3)
+                            .addComponent(btnedigas, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(130, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(txtidgasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(170, 170, 170)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel30)
-                            .addComponent(txttipogas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txttipogas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtidgasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel34)
@@ -1510,7 +1600,9 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(btnagreg)
                             .addComponent(btnedigas))))
                 .addGap(36, 36, 36)
-                .addComponent(btnelig)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnelig)
+                    .addComponent(jButton3))
                 .addContainerGap(243, Short.MAX_VALUE))
         );
 
@@ -1722,7 +1814,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_tableVentaAncestorAdded
 
     private void btnbuscarvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarvActionPerformed
-        
+
         ListarDetalle();
         ListarGast();
         totalVent();
@@ -2426,6 +2518,7 @@ public class Sistema extends javax.swing.JFrame {
     private void btnventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnventasActionPerformed
 
         LimpirarTable();
+        ListarGastos();
         jTabbedPane1.setSelectedIndex(4);
     }//GEN-LAST:event_btnventasActionPerformed
 
@@ -2560,6 +2653,18 @@ public class Sistema extends javax.swing.JFrame {
         String date = dFormat.format(jdateinicial.getDate());
         Excel2.reporte(date);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ListarBusquedaCli();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnBuscarprovedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarprovedorActionPerformed
+        ListarBusquedaPro();
+    }//GEN-LAST:event_btnBuscarprovedorActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       ListarBusquedaGas();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2925,6 +3030,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTable Tablegas;
     private javax.swing.JTable Tableprovedor;
     private javax.swing.JTable Tablevenf;
+    private javax.swing.JButton btnBuscarprovedor;
     private javax.swing.JButton btnEditarCliente;
     private javax.swing.JButton btnEditarProd;
     private javax.swing.JButton btnEditarProveedor;
@@ -2950,6 +3056,8 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnventas;
     private javax.swing.JComboBox<String> cbxProveedorProd;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -136,5 +136,30 @@ public class ClienteDAO {
         return cl;
 
     }
+    
+    public List BuscarCli() {
+        String valor = JOptionPane.showInputDialog(null, "Digite un Documento", "BUSCAR CLIENTE", JOptionPane.PLAIN_MESSAGE);
+       
+         List<Cliente> ListaCli = new ArrayList();
+        String sql = "SELECT * FROM cliente where documento like '"+valor+"' ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cliente cli = new Cliente();
+                cli.setId(rs.getInt("id"));
+                cli.setDocumento(rs.getString("documento"));
+                cli.setNombre(rs.getString("nombre"));
+                cli.setCorreo(rs.getString("correo"));
+                cli.setTelefono(rs.getString("telefono"));
+                ListaCli.add(cli);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaCli;
+    }
 
 }

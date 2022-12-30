@@ -134,4 +134,29 @@ public class GastoDAO {
         }
         return ListaGas;
     }
+     
+     public List BuscarGas() {
+        String valor = JOptionPane.showInputDialog(null, "Digite un Tipo de gasto", "BUSCAR GASTO", JOptionPane.PLAIN_MESSAGE);
+       
+         List<Gasto> ListaGa = new ArrayList();
+        String sql = "SELECT * FROM gasto where tipogasto like '"+valor+"' ";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Gasto Gas = new Gasto();
+                Gas.setId(rs.getInt("id"));
+                Gas.setTipogasto(rs.getString("tipogasto"));
+                Gas.setDescripcion(rs.getString("descripcion"));
+                Gas.setCantidad(rs.getInt("cantidad"));
+                Gas.setFecha(rs.getString("fecha"));
+                ListaGa.add(Gas);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaGa;
+    }
 }
