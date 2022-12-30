@@ -1513,12 +1513,24 @@ public class Sistema extends javax.swing.JFrame {
         jLabel42.setText("Cantidad");
 
         txttipogas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txttipogasKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txttipogasKeyTyped(evt);
             }
         });
 
+        txtdescgas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtdescgasKeyPressed(evt);
+            }
+        });
+
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantidadKeyTyped(evt);
             }
@@ -2432,6 +2444,38 @@ public class Sistema extends javax.swing.JFrame {
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         EVENT.numberKeyPress(evt);
     }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void txttipogasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttipogasKeyPressed
+          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txttipogas.getText())) {
+                txtdescgas.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una Referencia");
+                txttipogas.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txttipogasKeyPressed
+
+    private void txtdescgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdescgasKeyPressed
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtdescgas.getText())) {
+                txtCantidad.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una Referencia");
+                txtdescgas.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txtdescgasKeyPressed
+
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if ("".equals(txtCantidad.getText())) {
+                JOptionPane.showMessageDialog(null, "Ingrese Un Precio");
+                txtCantidad.requestFocus();
+            }
+
+        }
+    }//GEN-LAST:event_txtCantidadKeyPressed
 
     /**
      * @param args the command line arguments
