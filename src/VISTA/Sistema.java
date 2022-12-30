@@ -63,7 +63,7 @@ public class Sistema extends javax.swing.JFrame {
     int Totalven = 0;
     int Totalgasv = 0;
     int Totalcambio = 0;
-    int Valorcaja=0;
+    int Valorcaja = 0;
     int Dinerorec = 0;
 
     int item;
@@ -505,6 +505,11 @@ public class Sistema extends javax.swing.JFrame {
         txtDescripcionVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDescripcionVentaActionPerformed(evt);
+            }
+        });
+        txtDescripcionVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDescripcionVentaKeyPressed(evt);
             }
         });
 
@@ -1916,7 +1921,7 @@ public class Sistema extends javax.swing.JFrame {
                 pro = proDao.BuscarPro(cod);
                 if (pro.getMarca() != null) {
                     txtMarcaVenta.setText("" + pro.getMarca());
-                    txtDescripcionVenta.setText("" + pro.getDescripcion());
+                    // txtDescripcionVenta.setText("" + pro.getDescripcion());
                     txtstock.setText("" + pro.getCantidad());
                     txtPrecioVenta.setText("" + pro.getPrecio());
                     txtvalor.setText("" + pro.getPrecio());
@@ -2014,7 +2019,7 @@ public class Sistema extends javax.swing.JFrame {
             if (!"".equals(txttallaven.getText())) {
                 int val = Integer.parseInt(txttallaven.getText());
                 if (val >= 21 && val <= 35) {
-                    txtPrecioVenta.requestFocus();
+                    txtDescripcionVenta.requestFocus();
                 } else {
                     JOptionPane.showMessageDialog(null, "Ingrese una talla valida");
                 }
@@ -2446,7 +2451,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void txttipogasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttipogasKeyPressed
-          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!"".equals(txttipogas.getText())) {
                 txtdescgas.requestFocus();
             } else {
@@ -2457,7 +2462,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_txttipogasKeyPressed
 
     private void txtdescgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdescgasKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!"".equals(txtdescgas.getText())) {
                 txtCantidad.requestFocus();
             } else {
@@ -2476,6 +2481,18 @@ public class Sistema extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_txtCantidadKeyPressed
+
+    private void txtDescripcionVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionVentaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtDescripcionVenta.getText())) {
+
+                txtPrecioVenta.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una Descripcion");
+                txtDescripcionVenta.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txtDescripcionVentaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -2520,7 +2537,8 @@ public class Sistema extends javax.swing.JFrame {
         txtcorreov.setText("");
         txtteleven.setText("");
         txtvendor.setText("");
-        LabelTotalVenta.setText("***********");
+        LabelTotalVenta.setText("*********************");
+        txtcambio.setText("*********************");
     }
 
     private void LimpiarCliente() {
@@ -2613,11 +2631,11 @@ public class Sistema extends javax.swing.JFrame {
     }
 
     private void ValorCaja() {
-       Valorcaja = 0;
-       int Valorven=Integer.parseInt(labelVent.getText());
-       int Valorvgas=Integer.parseInt(labelgas.getText());
-       Valorcaja = Valorven-Valorvgas;
-       labertotalca.setText(""+Valorcaja);
+        Valorcaja = 0;
+        int Valorven = Integer.parseInt(labelVent.getText());
+        int Valorvgas = Integer.parseInt(labelgas.getText());
+        Valorcaja = Valorven - Valorvgas;
+        labertotalca.setText("" + Valorcaja);
     }
 
     private void RestrarVenta() {
@@ -2682,7 +2700,7 @@ public class Sistema extends javax.swing.JFrame {
             FileOutputStream archivo;
             String fileName = "productos";
             String home = System.getProperty("user.home");
-            File file = new File(home + "/Downloads/venta" + id + ".pdf");
+            File file = new File(home + "/Downloads/Ventas/venta" + id + ".pdf");
             //File file = new File("src/PDF/venta"+id+".pdf");
             archivo = new FileOutputStream(file);
             Document doc = new Document();
