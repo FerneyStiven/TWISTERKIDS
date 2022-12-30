@@ -23,7 +23,7 @@ public class GastoDAO {
             ps.setString(1, ga.getTipogasto());
             ps.setString(2, ga.getDescripcion());
             ps.setInt(3, ga.getCantidad());
-            
+
             ps.execute();
             return true;
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class GastoDAO {
                 ga.setDescripcion(rs.getString("descripcion"));
                 ga.setCantidad(rs.getInt("cantidad"));
                 ga.setFecha(rs.getString("fecha"));
-                
+
                 ListaGa.add(ga);
             }
 
@@ -63,8 +63,8 @@ public class GastoDAO {
         }
         return ListaGa;
     }
-    
-       public boolean EliminarGasto(int id) {
+
+    public boolean EliminarGasto(int id) {
         String sql = "DELETE FROM gasto where id = ?";
         try {
             ps = con.prepareStatement(sql);
@@ -80,6 +80,31 @@ public class GastoDAO {
             } catch (SQLException ex) {
 
                 System.out.println(ex.toString());
+            }
+        }
+
+    }
+
+    public boolean ModificarGasto(Gasto ga) {
+        String sql = "Update gasto SET tipogasto=?,descripcion =?, cantidad=? WHERE  id=?;";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ga.getTipogasto());
+            ps.setString(2, ga.getDescripcion());
+            ps.setInt(3, ga.getCantidad());
+            ps.setInt(4, ga.getId());
+            ps.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println(e.toString());
             }
         }
 
