@@ -1442,7 +1442,7 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(txtDescripcionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel22))
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtCantidaProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel23))
                         .addGap(28, 28, 28)
@@ -1980,6 +1980,7 @@ public class Sistema extends javax.swing.JFrame {
             proDao.RegistarProductos(pro);
             JOptionPane.showMessageDialog(null, "Producto registrado");
             ListarProducto();
+            LimpiarProducto();
         } else {
             JOptionPane.showMessageDialog(null, "los campos estan vacios");
         }
